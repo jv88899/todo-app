@@ -5,9 +5,24 @@ class AddTodo extends Component {
         todoText: ''
     }
 
+    onTodoAdd = e => {
+        e.preventDefault();
+        this.props.handleTodoAdd({
+            uid: 3,
+            todoText: this.state.todoText,
+            createdAt: new Date(),
+            isDone: false,
+            completedAt: ''
+        })
+        this.setState( () => ({ todoText: '' }));
+    }
+
     render() {
         return (
-            <form className="add-todo">
+            <form
+                className="add-todo"
+                onSubmit={this.onTodoAdd}
+            >
                 <div className="add-todo__message">
                     <h2>Add a todo</h2>
                 </div>
@@ -16,7 +31,11 @@ class AddTodo extends Component {
                     value={this.state.todoText}
                     onChange={e => this.setState({ todoText: e.target.value })}
                 />
-                <button>Add</button>
+                <input
+                    type="submit"
+                    className="add-todo__button"
+                    value="Add"
+                />
             </form>
         )
     }

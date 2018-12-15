@@ -23,12 +23,21 @@ class App extends Component {
         completedTodos: []
     }
 
+    handleTodoAdd = obj => {
+        this.setState(prevState => ({
+            todos: prevState.todos.concat(obj)
+        }))
+        console.log(this.state.todos);
+    }
+
     render() {
         return (
             <div>
                 <h1>To-Done</h1>
                 <p>Get shit done</p>
-                <AddTodo />
+                <AddTodo
+                    handleTodoAdd={this.handleTodoAdd}
+                />
                 <TodoList todos={this.state.todos} />
             </div>
         );
