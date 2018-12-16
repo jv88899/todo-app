@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import AddTodo from './addTodo/AddTodo';
 import TodoList from './todoList/TodoList';
+import RemoveAllTodos from './removeAllTodos/RemoveAllTodos';
 
 class App extends Component {
     state = {
@@ -11,7 +12,7 @@ class App extends Component {
     handleAddTodo = obj => {
         this.setState(prevState => ({
             todos: prevState.todos.concat(obj)
-        }), () => console.log(this.state.todos))
+        }))
     }
 
     handleRemoveTodo = id => {
@@ -22,11 +23,20 @@ class App extends Component {
         }))
     }
 
+    handleRemoveAllTodos = () => {
+        this.setState( () => ({ todos: [] }))
+    }
+
     render() {
         return (
             <div>
                 <h1>To-Done</h1>
                 <p>Get shit done</p>
+                {
+                    this.state.todos.length <= 0
+                        ? <p>Add a todo to get started</p>
+                        : <RemoveAllTodos handleRemoveAllTodos={this.handleRemoveAllTodos}/>
+                }
                 <AddTodo
                     handleAddTodo={this.handleAddTodo}
                 />
