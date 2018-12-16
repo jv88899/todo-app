@@ -13,8 +13,10 @@ class App extends Component {
         // Get todos from local storage and set state
         const todos = JSON.parse(localStorage.getItem('todos'));
         const completedTodos = JSON.parse(localStorage.getItem('completedTodos'));
-        this.setState( () => ({ todos }))
-
+        this.setState( () => ({
+            todos,
+            completedTodos
+        }))
     }
 
     handleAddTodo = obj => {
@@ -38,7 +40,9 @@ class App extends Component {
             }
         }, () => {
             const todoJSON = JSON.stringify(this.state.todos);
+            const completedTodosJSON = JSON.stringify(this.state.completedTodos);
             localStorage.setItem('todos', todoJSON);
+            localStorage.setItem('completedTodos', completedTodosJSON);
         })
     }
 
