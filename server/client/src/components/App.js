@@ -9,16 +9,26 @@ class App extends Component {
         completedTodos: []
     }
 
+    componentDidMount = () => {
+        // Get todos from local storage and set state
+        const todos = JSON.parse(localStorage.getItem('todos'));
+        const completedTodos = JSON.parse(localStorage.getItem('completedTodos'));
+        this.setState( () => ({ todos }))
+
+    }
+
     handleAddTodo = obj => {
         // Add the new todo to todos state array
         this.setState(prevState => ({
             todos: prevState.todos.concat(obj)
-        }))
+        }), () => {
+            const todosJSON = JSON.stringify(this.state.todos);
+            localStorage.setItem('todos', todosJSON);
+        })
     }
 
     handleRemoveTodo = (obj) => {
         // Add the object to completedTodos and update state with removed object
-        console.log(this.state.todos)
         this.setState( prevState => {
             return {
                 completedTodos: prevState.completedTodos.concat(obj),
@@ -26,7 +36,10 @@ class App extends Component {
                     return obj.uid !== todo.uid
                 })
             }
-        }, () => console.log(this.state.completedTodos))
+        }, () => {
+            const todoJSON = JSON.stringify(this.state.todos);
+            localStorage.setItem('todos', todoJSON);
+        })
     }
 
     handleRemoveAllTodos = () => {
