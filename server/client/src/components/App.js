@@ -4,30 +4,22 @@ import TodoList from './todoList/TodoList';
 
 class App extends Component {
     state = {
-        todos: [
-            {
-                uid: 1,
-                todoText: 'Complete a project',
-                createdAt: new Date(),
-                isDone: false,
-                completedAt: ''
-            },
-            {
-                uid: 2,
-                todoText: 'Make this work',
-                createdAt: new Date(),
-                isDone: false,
-                completedAt: ''
-            }
-        ],
+        todos: [],
         completedTodos: []
     }
 
-    handleTodoAdd = obj => {
+    handleAddTodo = obj => {
         this.setState(prevState => ({
             todos: prevState.todos.concat(obj)
+        }), () => console.log(this.state.todos))
+    }
+
+    handleRemoveTodo = id => {
+        this.setState( prevState => ({
+            todos: prevState.todos.filter( todo => {
+                return id !== todo.uid
+            })
         }))
-        console.log(this.state.todos);
     }
 
     render() {
@@ -36,9 +28,12 @@ class App extends Component {
                 <h1>To-Done</h1>
                 <p>Get shit done</p>
                 <AddTodo
-                    handleTodoAdd={this.handleTodoAdd}
+                    handleAddTodo={this.handleAddTodo}
                 />
-                <TodoList todos={this.state.todos} />
+                <TodoList
+                    todos={this.state.todos}
+                    handleRemoveTodo={this.handleRemoveTodo}
+                />
             </div>
         );
     }

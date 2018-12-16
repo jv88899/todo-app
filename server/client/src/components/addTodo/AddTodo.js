@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
+const uuidv4 = require('uuid/v4');
 
 class AddTodo extends Component {
     state = {
         todoText: ''
     }
 
-    onTodoAdd = e => {
+    onAddTodo = e => {
         e.preventDefault();
-        this.props.handleTodoAdd({
-            uid: 3,
+        this.props.handleAddTodo({
+            uid: uuidv4(),
             todoText: this.state.todoText,
             createdAt: new Date(),
             isDone: false,
             completedAt: ''
-        })
-        this.setState( () => ({ todoText: '' }));
+        }, this.setState(() => ({ todoText: '' })))
     }
 
     render() {
         return (
             <form
                 className="add-todo"
-                onSubmit={this.onTodoAdd}
+                onSubmit={this.onAddTodo}
             >
                 <div className="add-todo__message">
                     <h2>Add a todo</h2>

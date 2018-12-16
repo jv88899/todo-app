@@ -8,6 +8,7 @@ const TodoList = props => (
                 <Todo
                     key={todo.uid}
                     todo={todo}
+                    handleRemoveTodo={props.handleRemoveTodo}
                 />
             ))
         }
