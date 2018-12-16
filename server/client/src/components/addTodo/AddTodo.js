@@ -32,6 +32,7 @@ class AddTodo extends Component {
                     type="submit"
                     className="add-todo__button"
                     value="Add"
+                    disabled={!this.state.todoText}
                 />
             </form>
         )
