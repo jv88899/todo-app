@@ -5,7 +5,10 @@ const Todo = props => (
         <p>{props.todo.todoText}</p>
         <button
             className="todo__remove-button"
-            onClick={ () => props.handleRemoveTodo(props.todo.uid )}
+            onClick={ () => {
+                props.todo.completedAt = new Date()
+                props.handleRemoveTodo(props.todo, props.todo.uid);
+            }}
         >
             X
         </button>
