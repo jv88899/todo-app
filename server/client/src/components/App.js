@@ -18,6 +18,7 @@ class App extends Component {
 
     handleRemoveTodo = (obj) => {
         // Add the object to completedTodos and update state with removed object
+        console.log(this.state.todos)
         this.setState( prevState => {
             return {
                 completedTodos: prevState.completedTodos.concat(obj),
@@ -25,7 +26,7 @@ class App extends Component {
                     return obj.uid !== todo.uid
                 })
             }
-        })
+        }, () => console.log(this.state.completedTodos))
     }
 
     handleRemoveAllTodos = () => {
