@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AddTodo from './addTodo/AddTodo';
 import TodoList from './todoList/TodoList';
 import RemoveAllTodos from './removeAllTodos/RemoveAllTodos';
+import './app.css';
 
 class App extends Component {
     state = {
@@ -39,6 +40,7 @@ class App extends Component {
                 })
             }
         }, () => {
+            // Store new state items to local storage
             const todoJSON = JSON.stringify(this.state.todos);
             const completedTodosJSON = JSON.stringify(this.state.completedTodos);
             localStorage.setItem('todos', todoJSON);
@@ -55,21 +57,23 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <h1>To-Done</h1>
-                <p>Get shit done</p>
-                {
-                    this.state.todos.length <= 0
-                        ? <p>Add a todo to get started</p>
-                        : <RemoveAllTodos handleRemoveAllTodos={this.handleRemoveAllTodos}/>
-                }
-                <AddTodo
-                    handleAddTodo={this.handleAddTodo}
-                />
-                <TodoList
-                    todos={this.state.todos}
-                    handleRemoveTodo={this.handleRemoveTodo}
-                />
+            <div className="app">
+                <div className="app__wrapper">
+                    <h1>To-Done</h1>
+                    <p>Get your things done</p>
+                    {
+                        this.state.todos.length <= 0
+                            ? <p>Add a todo to get started</p>
+                            : <RemoveAllTodos handleRemoveAllTodos={this.handleRemoveAllTodos}/>
+                    }
+                    <AddTodo
+                        handleAddTodo={this.handleAddTodo}
+                    />
+                    <TodoList
+                        todos={this.state.todos}
+                        handleRemoveTodo={this.handleRemoveTodo}
+                    />
+                </div>
             </div>
         );
     }

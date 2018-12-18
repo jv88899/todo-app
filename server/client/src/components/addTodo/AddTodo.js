@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './addtodo.css';
 const uuidv4 = require('uuid/v4');
 
 class AddTodo extends Component {
@@ -25,6 +26,7 @@ class AddTodo extends Component {
             >
                 <input
                     type="text"
+                    className="add-todo__input"
                     value={this.state.todoText}
                     onChange={e => this.setState({ todoText: e.target.value })}
                 />
