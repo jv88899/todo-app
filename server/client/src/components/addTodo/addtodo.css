@@ -1,17 +1,23 @@
 .add-todo {
     display: flex;
-    height: 32px;
+    flex-direction: column;
     justify-content: space-around;
     width: 100%;
 }
 
 .add-todo__input {
+    border: none;
     flex-grow: 2;
+    font-size: 1.5em;
+    padding: 10px;
 }
 
 .add-todo__button {
     background: rgb(0, 0, 8);
+    border: none;
     color: #fff;
     flex-grow: 1;
     font-size: 1.5em;
+    margin-top: 5px;
+    padding: 10px 0;
 }

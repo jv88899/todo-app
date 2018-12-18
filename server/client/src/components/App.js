@@ -3,6 +3,7 @@ import AddTodo from './addTodo/AddTodo';
 import TodoList from './todoList/TodoList';
 import RemoveAllTodos from './removeAllTodos/RemoveAllTodos';
 import './app.css';
+import MarkAllComplete from './markAllComplete/MarkAllComplete';
 
 class App extends Component {
     state = {
@@ -14,10 +15,26 @@ class App extends Component {
         // Get todos from local storage and set state
         const todos = JSON.parse(localStorage.getItem('todos'));
         const completedTodos = JSON.parse(localStorage.getItem('completedTodos'));
-        this.setState( () => ({
-            todos,
-            completedTodos
-        }))
+        
+        if (todos) {
+            this.setState( () => ({
+                todos
+            }))
+        } else {
+            this.setState( () => ({
+                todos: []
+            }))
+        }
+
+        if (completedTodos) {
+            this.setState( () => ({
+                completedTodos
+            }))
+        } else {
+            this.setState( () => ({
+                completedTodos: []
+            }))
+        }
     }
 
     handleAddTodo = obj => {
@@ -30,7 +47,7 @@ class App extends Component {
         })
     }
 
-    handleRemoveTodo = (obj) => {
+    handleRemoveTodo = obj => {
         // Add the object to completedTodos and update state with removed object
         this.setState( prevState => {
             return {
@@ -50,10 +67,31 @@ class App extends Component {
 
     handleRemoveAllTodos = () => {
         // Remove all todos without marking them complete
-        this.setState( () => ({ todos: [] }))
+        this.setState( () => ({ todos: [] }), () => {
+            const todoJSON = JSON.stringify(this.state.todos);
+            localStorage.setItem('todos', todoJSON);
+        })
     }
 
-    // todo: Mark all todos complete (add to completedTodos)
+    handleMarkAllComplete = () => {
+        // Add all todos to completed todos
+        let currentTodos = this.state.todos;
+        currentTodos.forEach( todo => {
+            todo.completedAt = new Date();
+            this.setState( prevState => ({
+                completedTodos: prevState.completedTodos.concat(todo)
+            }))
+        })
+        this.setState( () => ({
+            todos: []
+        }), () => {
+            const todoJSON = JSON.stringify(this.state.todos);
+            const completedTodosJSON = JSON.stringify(this.state.completedTodos);
+            localStorage.setItem('todos', todoJSON);
+            localStorage.setItem('completedTodos', completedTodosJSON);
+        })
+
+    }
 
     render() {
         return (
@@ -69,6 +107,12 @@ class App extends Component {
                     <AddTodo
                         handleAddTodo={this.handleAddTodo}
                     />
+                    {
+                        this.state.todos.length > 0 &&
+                        <MarkAllComplete
+                            handleMarkAllComplete={this.handleMarkAllComplete}
+                        />
+                    }
                     <TodoList
                         todos={this.state.todos}
                         handleRemoveTodo={this.handleRemoveTodo}
