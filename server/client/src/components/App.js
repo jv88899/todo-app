@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import AddTodo from './addTodo/AddTodo';
 import TodoList from './todoList/TodoList';
 import RemoveAllTodos from './removeAllTodos/RemoveAllTodos';
-import './app.css';
 import MarkAllComplete from './markAllComplete/MarkAllComplete';
+import CompletedTodos from './completedTodos/CompletedTodos';
+import './app.css';
 
 class App extends Component {
     state = {
@@ -16,6 +17,7 @@ class App extends Component {
         const todos = JSON.parse(localStorage.getItem('todos'));
         const completedTodos = JSON.parse(localStorage.getItem('completedTodos'));
         
+        // if todos doesn't have a value, set it to an empty array
         if (todos) {
             this.setState( () => ({
                 todos
@@ -26,6 +28,7 @@ class App extends Component {
             }))
         }
 
+        // if completedTodos doesn't have a value, set it to an empty array
         if (completedTodos) {
             this.setState( () => ({
                 completedTodos
@@ -117,6 +120,10 @@ class App extends Component {
                         todos={this.state.todos}
                         handleRemoveTodo={this.handleRemoveTodo}
                     />
+                    {
+                        this.state.completedTodos.length > 0 &&
+                        <CompletedTodos />
+                    }
                 </div>
             </div>
         );
