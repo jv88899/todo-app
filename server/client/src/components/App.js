@@ -121,7 +121,7 @@ class App extends Component {
                         handleRemoveTodo={this.handleRemoveTodo}
                     />
                     {
-                        this.state.completedTodos.length > 0 &&
+                        this.state.completedTodos.length >= 5 &&
                         <CompletedTodos />
                     }
                 </div>
